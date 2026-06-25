@@ -19,8 +19,8 @@
                     {{-- <img src="{{ asset('images/logo.jpg') }}"
                         width="40"> --}}
 
-                    <h2 class="ms-3 fw-bold fs-5">
-                        Rental Mobil
+                    <h2 class="ms-4 fw-bold fs-4">
+                        Amanah Jaya Rental
                     </h2>
                 </div>
                 <ul class="sidebar-nav">

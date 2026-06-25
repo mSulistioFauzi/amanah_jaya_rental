@@ -17,7 +17,7 @@
                 </ul>
             @endif
 
-            <h1 class="mb-5">Tambah User</h1>
+            <h1 class="mb-5">Tambah Data Admin</h1>
 
             <div class="mb-3 row">
                 <label for="name" class="col-sm-2 col-form-label">Nama:</label>
@@ -37,17 +37,7 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="role" class="col-sm-2 col-form-label">Role:</label>
-                <div class="col-sm-10">
-                    <select class="form-select" name="role" id="role" required>
-                        <option selected disabled hidden>Pilih</option>
-                        <option value="admin" {{ $user['role'] == 'admin' ? 'selected' : '' }}>admin</option>
-                        <option value="customer" {{ $user['role'] == 'customer' ? 'selected' : '' }}>customer</option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Tambah Data</button>
+            <button type="submit" class="btn btn-primary mt-3">Tambah Admin</button>
         </form>
     </div>
 @endsection

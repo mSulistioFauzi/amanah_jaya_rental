@@ -90,24 +90,14 @@ class UsersController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'role' => 'required',
+            'password' => 'required|min:6',
         ]);
 
-        $defaultPassword = substr($request->email, 0, 3) . substr($request->name, 0, 3);
-
-        // Check if the email already exists
-        $existingUser = User::where('email', $request->email)->first();
-
-        if ($existingUser) {
-            return redirect()->route('user.index')->with('error', 'Email already exists!');
-        }
-
-        // Create the user
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
-            'password' => bcrypt($defaultPassword),
+            'role' => 'admin',
+            'password' => bcrypt($request->password),
         ]);
 
         return redirect()->route('user.index')->with('success', 'Berhasil menambahkan data pengguna!');
