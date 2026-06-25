@@ -31,19 +31,19 @@
                     <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email" required>
                 </div>
             </div>
-            {{-- <div class="mb-3 row">
+            <div class="mb-3 row">
                 <label for="password" class="col-sm-2 col-form-label">Password:</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
                 </div>
-            </div> --}}
+            </div>
             <div class="mb-3 row">
                 <label for="role" class="col-sm-2 col-form-label">Role:</label>
                 <div class="col-sm-10">
                     <select class="form-select" name="role" id="role" required>
                         <option selected disabled hidden>Pilih</option>
                         <option value="admin" {{ $user['role'] == 'admin' ? 'selected' : '' }}>admin</option>
-                        <option value="ps" {{ $user['role'] == 'ps' ? 'selected' : '' }}>ps</option>
+                        <option value="customer" {{ $user['role'] == 'customer' ? 'selected' : '' }}>customer</option>
                     </select>
                 </div>
             </div>

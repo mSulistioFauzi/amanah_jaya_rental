@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\Rental;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UsersController extends Controller
@@ -55,27 +56,35 @@ class UsersController extends Controller
         return view('users.create',compact('user'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|email',
-    //         'role' => 'required',
-    //     ]);
-    //         $defaultPassword = substr($request->email, 0, 3) . substr($request->name, 0, 3);
+    public function register()
+    {
+        return view('register');
+    }
 
-    //         User::create([
-    //             'name' => $request->name,
-    //             'email' => $request->email,
-    //             'role' => $request->role,
-    //             'password' => bcrypt($defaultPassword),
-    //         ]);
+    public function registerStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required',
+            'address' => 'required',
+            'password' => 'required|min:6|confirmed',
+        ]);
 
-    //         return redirect()->route('user.index')->with('success', 'Berhasil mengubah data pengguna!');
-    //     }
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'password' => Hash::make($request->password),
+            'role' => 'customer',
+        ]);
+
+        return redirect()
+            ->route('login')
+            ->with('success', 'Registrasi berhasil, silakan login');
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -106,22 +115,13 @@ class UsersController extends Controller
 
 
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $users = User::find($id);
-        return view('users.edit', compact('users'));
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
 
@@ -132,17 +132,21 @@ class UsersController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,' . $id,
             'role' => 'required',
         ]);
 
-        $defaultPassword = Str::substr($request->email, 0, 3) . Str::substr($request->name, 0, 3);
-        User::where('id', $id)->update([
+        $user = User::findOrFail($id);
+        $data = [
             'name' => $request->name,
-            'email'=> $request->email,
-            'role'=> $request->role,
-            'password' => bcrypt($defaultPassword),
-        ]);
+            'email' => $request->email,
+            'role' => $request->role,
+        ];
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        $user->update($data);
         return redirect()->route('user.index')->with('success', 'Berhasil Mengubah Data User');
     }
 

@@ -128,6 +128,8 @@ class CarsController extends Controller
     {
         $car = Car::findOrFail($id);
 
+        // $filePath = public_path('uploads/cars/' . $car->gambar);
+
         if ($car->gambar && file_exists(public_path('uploads/cars/' . $car->gambar))) {
             unlink(public_path('uploads/cars/' . $car->gambar));
         }
@@ -148,6 +150,6 @@ class CarsController extends Controller
             ->latest()
             ->get();
 
-        return view('customer.cars', compact('cars'));
+        return view('customer.car.cars', compact('cars'));
     }
 }

@@ -103,17 +103,38 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse navbar">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user-ninja"></i>
-                                {{ Auth::check() ? Auth::user()->name : 'Belum Login' }}
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="{{ route('logout') }}" class="dropdown-item" style="color: #fff">Logout</a>
-                            </div>
-                        </li>
+                    <ul class="navbar-nav ms-auto">
+                        @guest
+                            <li class="nav-item me-2">
+                                <a href="{{ route('login') }}" class="btn btn-outline-primary">
+                                    Login
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="btn btn-primary">
+                                    Registrasi
+                                </a>
+                            </li>
+                        @endguest
+                        @auth
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fw-bold"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-user"></i>
+                                    {{ Auth::user()->name }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                        class="dropdown-item">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </nav>

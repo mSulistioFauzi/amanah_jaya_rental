@@ -1,50 +1,71 @@
 @extends('layouts.template')
 
 @section('content')
-<form action="{{ route('user.update', $users['id']) }}" method="post" class="card p-5">
-@csrf
-@method('PATCH')
+    <div class="container">
+        <div class="card shadow-sm border-0">
+            <div class="card-header">
+                <h4 class="mb-0">Edit User</h4>
+            </div>
 
-@if ($errors->any())
-<ul class="alert alert-danger p-3">
-    @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-</ul>
-@endif
-    <div class="mb-3 row">
-        <label for="name" class="col-sm-2 col-form-label">Nama Anda:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" name="name" value="{{ $users['name'] }}">
-        </div>
-    </div>
-    
-    <div class="mb-3 row">
-        <label for="name" class="col-sm-2 col-form-label">Email Anda:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="email" name="email" value="{{ $users['email'] }}">
-        </div>
-    </div>
-    
-      <div class="mb-3 row">
-        <label for="role" class="col-sm-2 col-form-label">Tipe Anda:</label>
-        <div class="col-sm-10">
-            <select name="role" id="role" class="form-select">
-                <option selected disabled hidden>Pilih</option>
-                <option value="admin" {{ $users['role'] == 'admin' ? 'selected' : '' }}>admin</option>
-                <option value="guru" {{ $users['role'] == 'guru' ? 'selected' : '' }}>guru</option>
-            </select>
-        </div>
-    </div>
-    
-    <div class="mb-3 row">
-        <label for="password" class="col-sm-2 col-form-label">Ubah Password :</label>
-        <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" name="password" value="{{ $users['password'] }}">
-        </div>
-    </div>
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
+                <form action="{{ route('user.update', $user->id) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
 
-<button type="submit" class="btn btn-primary mt-3">Ubah Data</button>
-</form>
+                    <div class="mb-3">
+                        <label class="form-label">Nama</label>
+                        <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select name="role" class="form-select" required>
+                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>
+                                Admin
+                            </option>
+                            <option value="customer" {{ $user->role == 'customer' ? 'selected' : '' }}>
+                                Customer
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password Baru</label>
+                        <input type="password" name="password" class="form-control">
+
+                        <small class="text-muted">
+                            Kosongkan jika tidak ingin mengubah password.
+                        </small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            Simpan Perubahan
+                        </button>
+
+                        <a href="{{ route('user.index') }}" class="btn btn-secondary">
+                            Kembali
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -23,6 +23,11 @@ Route::middleware('IsGuest')->group(function () {
         return view('login');
     })->name('login');
     Route::get('/login', [UsersController::class, 'loginAuth'])->name('login.auth');
+    Route::get('/register', [UsersController::class, 'register'])
+    ->name('register');
+
+    Route::post('/register/store', [UsersController::class, 'registerStore'])
+        ->name('register.store');
 });
 
 Route::get('/error-permission', function() {
@@ -64,6 +69,7 @@ Route::middleware(['IsLogin'])->group(function() {
             Route::get('/', [PaymentsController::class, 'index'])->name('index');
             Route::patch('/approve/{id}', [PaymentsController::class, 'approve'])->name('approve');
             Route::patch('/reject/{id}', [PaymentsController::class, 'reject'])->name('reject');
+            Route::get('/detail/{id}', [PaymentsController::class, 'show'])->name('show');
         });
 
         Route::prefix('return')->name('return.')->group(function () {
