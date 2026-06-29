@@ -47,7 +47,7 @@ h4 {
     min-width: 264px;
     background: var(--bs-dark);
     transition: all 0.35s ease-in-out;
-    background: #0ef 45%;
+    background: lightblue ;
 }
 
 .main {
@@ -59,7 +59,7 @@ h4 {
     transition: all 0.35s ease-in-out;
     width: 100%;
     background: var(--bs-dark-bg-subtle);
-    background: linear-gradient(120deg, #1e1e1e 65%, #0ef 20%);
+    background: linear-gradient(120deg, #1e1e1e 65%, lightblue);
 }
 
 

@@ -22,12 +22,15 @@ Route::middleware('IsGuest')->group(function () {
     Route::get('/', function() {
         return view('login');
     })->name('login');
-    Route::get('/login', [UsersController::class, 'loginAuth'])->name('login.auth');
-    Route::get('/register', [UsersController::class, 'register'])
-    ->name('register');
+    Route::post('/login', [UsersController::class, 'loginAuth'])->name('login.auth');
 
-    Route::post('/register/store', [UsersController::class, 'registerStore'])
-        ->name('register.store');
+    Route::get('/admin/login', function () {
+        return view('login_admin');
+    })->name('admin.login');
+    Route::post('/admin/login', [UsersController::class, 'adminLoginAuth'])->name('admin.login.auth');
+
+    Route::get('/register', [UsersController::class, 'register'])->name('register');
+    Route::post('/register/store', [UsersController::class, 'registerStore'])->name('register.store');
 });
 
 Route::get('/error-permission', function() {

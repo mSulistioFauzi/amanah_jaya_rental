@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @stack('styles')
 </head>
 
 <body>
+    @auth
     <div class="wrapper">
         <aside id="sidebar" class="js-sidebar">
             <div class="h-100">
@@ -144,6 +146,10 @@
             </div>
         </div>
     </div>
+    @endauth
+    @guest
+    @yield('content')
+    @endguest
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

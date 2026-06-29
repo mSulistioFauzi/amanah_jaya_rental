@@ -160,15 +160,38 @@ class UsersController extends Controller
             'email.required' => 'Email harus diisi',
             'email.email' => 'Email tidak valid',
             'password.required' => 'Password harus diisi',
-            'password.alpha_dash' => 'Password harus diisi huruf dan karakter tanpa spasi',
         ]);
 
-        $user = $request->only(['email', 'password']);
-        if(Auth::attempt($user)) {
-            return redirect()->route('home');
-        } else {
-            return redirect()->back()->with('failed', 'Proses login gagal, silahkan coba kembali dengan data yang benar!');
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+            'role' => 'customer'
+        ])) {
+            return redirect()->route('customer.cars');
         }
+
+        return back()->with('failed','Email atau password customer salah!');
+    }
+
+    public function adminLoginAuth(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email:dns',
+            'password' => 'required',
+        ], [
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'password.required' => 'Password harus diisi',
+        ]);
+
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+            'role' => 'admin'
+        ])) {
+            return redirect()->route('home');
+        }
+        return back()->with('failed','Email atau password admin salah!');
     }
 
     public function logout()
